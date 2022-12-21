@@ -1,0 +1,96 @@
+@startuml
+class Show {
+	Integer id
+	URL url
+	String name
+    String type
+    String language
+    String[] genres
+    String status
+    Integer runtime
+    Integer averageRuntime
+    Date premiered
+    Date ended
+    URL officialSite
+    Schedule schedule
+	Rating rating
+	Integer weight
+	Network network
+	Network webChannel
+    Country dvdCountry
+    Externals externals
+    Image image
+    HTML summary
+    Timestamp updated
+    Link _links.self
+    Link _links.previousepisode
+    Link _links.nextepisode
+}
+
+Show *-- Schedule
+Show *-- Rating
+Show *-- Network
+Show *-- Country
+Show *-- Externals
+
+class Externals {
+	Integer tvrage
+	Integer thetvdb
+	String imdb
+}
+
+class Schedule {
+    Time time
+    String[] days
+}
+
+class Network {
+	Integer id
+	String name
+    Country country
+	URL officialSite
+}
+
+Network *-- Country
+
+class Country {
+	String name
+    String code
+    Timezone timezone
+}
+
+class Episode {
+	Integer id
+	URL url
+	String name
+	Integer season
+	Integer number
+	String type
+	Date airdate
+	Time airtime
+	Timestamp airstamp
+	Integer runtime
+	Rating rating
+	Image image
+	HTML summary
+	Show show
+    Link _links.self
+    Link _links.show
+}
+
+Episode *-- Rating
+Episode --* Show
+
+class Rating {
+	Float average
+}
+
+object Image {
+	URL medium
+	URL original
+}
+
+object Link {
+	URL href
+}
+@enduml
