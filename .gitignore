@@ -5,6 +5,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+pnpm-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -38,8 +39,10 @@ bower_components
 build/Release
 
 # Dependency directories
+.DS_Store
 node_modules/
 jspm_packages/
+/dist
 
 # TypeScript v1 declaration files
 typings/
@@ -68,9 +71,16 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
+# Yarn lock file
+yarn.lock
+
 # dotenv environment variables file
 .env
 .env.test
+
+# local env files
+.env.local
+.env.*.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -102,3 +112,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
