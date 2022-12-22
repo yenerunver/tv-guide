@@ -1,26 +1,9 @@
 import { createApp } from "vue";
-import { createStore } from "vuex";
 import App from "./App.vue";
 import router from "./router";
+import vuetify from "./plugins/vuetify";
+import { loadFonts } from "./plugins/webfontloader";
 
-import "./assets/main.css";
+loadFonts().then();
 
-const store = createStore({
-  state() {
-    return {
-      country: {
-        name: "United States",
-        code: "US",
-        timezone: "America/New_York",
-      },
-    };
-  },
-});
-
-const app = createApp(App);
-
-app.use(router);
-
-app.mount("#app");
-
-app.use(store);
+createApp(App).use(router).use(vuetify).mount("#app");
