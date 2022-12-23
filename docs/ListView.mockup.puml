@@ -1,0 +1,28 @@
+@startsalt
+skinparam dpi 300
+skinparam handwritten true
+skinparam Backgroundcolor white
+{SI
+{+
+{* <&play-circle><b>TV Guide | .|.|.|.|.|.|.|.|.|Date & Time | Country: | US
+ US | AU| BR | CN | DE | NL | TR | UK }
+.
+{+
+<&magnifying-glass>                      Search Your Favourite TV Show                      <&magnifying-glass>
+}
+.
+{/ Yesterday | <b>Today | Tomorrow | Choose Date <&calendar>  }
+.
+{T-
++           | 20:00 | 21:00 | 22:00
+.
++ <b>Action | Crashing Cars | Jumping from Planes | Shooting
+.
++ <b>Comedy | Ricky | Gervais | Show
+.
++ <b>Drama  | Crying Men | Clash of Sitars | Drammm
+.
+}
+}
+}
+@endsalt
