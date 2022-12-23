@@ -1,21 +1,29 @@
 <template>
-  <v-app>
+  <v-app theme="dark">
+    <HeaderBar />
     <v-main>
-      <router-view />
+      <v-parallax
+        src="assets/background.jpg"
+      >
+        <router-view />
+      </v-parallax>
     </v-main>
+    <FooterCopyright />
   </v-app>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import HeaderBar from "@/components/HeaderBar.vue";
+import FooterCopyright from "@/components/FooterCopyright.vue";
+
 export default defineComponent({
   name: "App",
 
-  data() {
-    return {
-      //
-    };
+  components: {
+    HeaderBar,
+    FooterCopyright,
   },
 });
 </script>

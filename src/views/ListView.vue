@@ -1,23 +1,19 @@
 <template>
-  <HeaderBar />
-  <v-container style="height: 1000px">
-    <SearchItem />
+  <v-container>
+    <SearchShow />
   </v-container>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
-// Components
-import HeaderBar from "@/components/HeaderBar.vue";
-import SearchItem from "@/components/SearchItem.vue";
+import SearchShow from "@/components/SearchShow.vue";
 
 export default defineComponent({
   name: "ListView",
 
   components: {
-    HeaderBar,
-    SearchItem,
+    SearchShow,
   },
 });
 </script>
