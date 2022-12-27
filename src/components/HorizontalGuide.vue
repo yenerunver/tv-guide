@@ -1,25 +1,30 @@
 <template>
-  <v-col :cols="mdAndUp ? 2 : 3">
-    <p>Genre 1</p>
-  </v-col>
-  <v-col :cols="mdAndUp ? 10 : 9">
-    <div class="wrapper overflow-x-visible overflow-y-hidden my-8">
-      <v-card v-for="i in [0, 1, 2, 3, 4]" :key="i" width="300">
-        <v-row>
-          <v-col>
-            <v-img src="assets/placeholder.show.medium.png" width="110" />
-          </v-col>
-          <v-col>
-            <h1>Title</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </v-col>
-        </v-row>
-      </v-card>
-    </div>
-  </v-col>
+  <v-row v-for="group in Object.keys(schedule)" :key="group" align="center">
+    <v-col v-if="!loading" :cols="mdAndUp ? 2 : 3">
+      <div class="text-overline">{{ group }}</div>
+    </v-col>
+    <v-col v-if="!loading" :cols="mdAndUp ? 10 : 9">
+      <div class="wrapper overflow-x-visible overflow-y-hidden my-8">
+        <v-card v-for="episode in schedule[group]" :key="episode" width="500">
+          <v-row>
+            <v-col>
+              <v-img
+                :src="this.getImage(episode, 'medium')"
+                width="250"
+              />
+            </v-col>
+            <v-col>
+              <h1>{{ episode.airtime }}</h1>
+              <h4>{{ episode.show.name }}</h4>
+              <h6>{{ episode.show.network.name }}</h6>
+              <p>{{ episode.summary }}</p>
+            </v-col>
+          </v-row>
+        </v-card>
+      </div>
+    </v-col>
+    <v-col v-if="loading">Loading...</v-col>
+  </v-row>
 </template>
 
 <style>
@@ -33,13 +38,18 @@
 
 <script>
 import { useDisplay } from "vuetify";
+import { Episode } from "@/models/Episode";
 
 export default {
   name: "HorizontalGuide",
+  props: ["loading", "schedule"],
   setup() {
     const { mdAndUp } = useDisplay();
 
     return { mdAndUp };
+  },
+  methods: {
+    getImage: (episode, size) => Episode.getImage(episode, size),
   },
 };
 </script>

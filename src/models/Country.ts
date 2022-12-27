@@ -5,12 +5,19 @@ import {
 } from "countries-and-timezones";
 import type { Country as CountryType } from "countries-and-timezones";
 
-export class Country {
+export interface ICountry {
   name: string;
   code: string;
   timezone: string;
+}
 
-  constructor(name: string, code: string, timezone: string) {
+export class Country {
+  name;
+  code;
+  timezone;
+
+  constructor(props: ICountry) {
+    const { name, code, timezone } = props;
     this.name = name;
     this.code = code;
     this.timezone = timezone;
@@ -19,7 +26,11 @@ export class Country {
   static getCountryByCode = (code: string, timezone: string = "") => {
     const country = getCountry(code);
     if (!country) return null;
-    return new Country(country.name, code, timezone || country.timezones[0]);
+    return new Country({
+      name: country.name,
+      code,
+      timezone: timezone || country.timezones[0],
+    });
   };
 
   static getCountryByTimezone = (timezone: string) => {

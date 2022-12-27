@@ -2,9 +2,13 @@
   <div class="pa-8">
     <v-row class="my-8">
       <v-col justify="start">
-        <a v-on:click.prevent="setDateOneDayBefore"><v-icon icon="mdi-arrow-left"></v-icon></a>
+        <a v-on:click.prevent="setDateOneDayBefore"
+          ><v-icon icon="mdi-arrow-left"></v-icon
+        ></a>
         <a>{{ dateString }}</a>
-        <a v-on:click.prevent="setDateOneDayAfter"><v-icon icon="mdi-arrow-right"></v-icon></a>
+        <a v-on:click.prevent="setDateOneDayAfter"
+          ><v-icon icon="mdi-arrow-right"></v-icon
+        ></a>
       </v-col>
       <v-col justify="end" cols="2">
         <v-select
@@ -18,10 +22,7 @@
         ></v-select>
       </v-col>
     </v-row>
-    <v-row>
-      <HorizontalGuide v-if="!isLoading" />
-      <p v-if="isLoading">Loading...</p>
-    </v-row>
+    <HorizontalGuide :loading="isLoading" :schedule="schedule" />
   </div>
 </template>
 
@@ -29,6 +30,7 @@
 import HorizontalGuide from "@/components/HorizontalGuide.vue";
 import { Country } from "@/models/Country";
 import { mapState } from "vuex";
+import { Episode } from "@/models/Episode";
 
 export default {
   name: "ScheduleItem",
@@ -82,7 +84,11 @@ export default {
       )
         .then((res) => res.json())
         .then((entries) => {
-          this.$store.dispatch("setSchedule", entries);
+          const episodes = entries.map((episode) => new Episode(episode));
+          this.$store.dispatch(
+            "setSchedule",
+            Episode.getEpisodesByGenre(episodes)
+          );
         })
         .catch((err) => {
           console.error(err);
