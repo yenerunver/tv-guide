@@ -8,16 +8,10 @@
     fade-img-on-scroll
     scroll-target="#scrolling-techniques-3"
   >
+    <template v-slot:prepend>
+      <v-icon icon="mdi-television-box" />
+    </template>
+
     <v-app-bar-title>TV Guide</v-app-bar-title>
-
-    <v-spacer></v-spacer>
-
-    <v-btn>
-      <v-select
-        variant="solo"
-        density="compact"
-        :items="['US', 'AU', 'CN', 'DE', 'NL', 'TR', 'UK']"
-      ></v-select>
-    </v-btn>
   </v-app-bar>
 </template>

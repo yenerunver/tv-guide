@@ -6,20 +6,25 @@ import { loadFonts } from "./plugins/webfontloader";
 import { createStore } from "vuex";
 import { Country } from "@/models/Country";
 
-const { timeZone: userTimezone = "Europe/Amsterdam" } =
+const { locale = "en-US", timeZone: userTimezone = "Europe/Amsterdam" } =
   Intl.DateTimeFormat().resolvedOptions();
 
 const store = createStore({
   state() {
     return {
+      schedule: {},
       shows: [],
       isLoading: false,
       locale: {
+        locale,
         country: Country.getCountryByTimezone(userTimezone),
       },
     };
   },
   mutations: {
+    SET_SCHEDULE(state, schedule) {
+      state.schedule = schedule;
+    },
     SET_SHOWS(state, shows) {
       state.shows = shows;
     },
@@ -28,6 +33,9 @@ const store = createStore({
     },
   },
   actions: {
+    setSchedule({ commit }, schedule) {
+      commit("SET_SCHEDULE", schedule);
+    },
     setShows({ commit }, shows) {
       commit("SET_SHOWS", shows);
     },
