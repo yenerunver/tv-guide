@@ -4,12 +4,19 @@ import router from "./router";
 import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
 import { createStore } from "vuex";
+import { Country } from "@/models/Country";
+
+const { timeZone: userTimezone = "Europe/Amsterdam" } =
+  Intl.DateTimeFormat().resolvedOptions();
 
 const store = createStore({
   state() {
     return {
       shows: [],
       isLoading: false,
+      locale: {
+        country: Country.getCountryByTimezone(userTimezone),
+      },
     };
   },
   mutations: {
