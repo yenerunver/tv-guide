@@ -2,12 +2,18 @@
   <div class="pa-8">
     <v-row class="my-8">
       <v-col justify="start">
-        <a v-on:click.prevent="setDateOneDayBefore"
-          ><v-icon icon="mdi-arrow-left"></v-icon
+        <a
+          href=""
+          class="text-decoration-none"
+          v-on:click.prevent="setDateOneDayBefore"
+          ><v-icon icon="mdi-arrow-left-drop-circle-outline"></v-icon
         ></a>
-        <a>{{ dateString }}</a>
-        <a v-on:click.prevent="setDateOneDayAfter"
-          ><v-icon icon="mdi-arrow-right"></v-icon
+        <a class="mx-4">{{ dateString }}</a>
+        <a
+          href=""
+          class="text-decoration-none"
+          v-on:click.prevent="setDateOneDayAfter"
+          ><v-icon icon="mdi-arrow-right-drop-circle-outline"></v-icon
         ></a>
       </v-col>
       <v-col justify="end" cols="2">

@@ -1,5 +1,7 @@
 <template>
-  <p v-if="loading">Loading...</p>
+  <div class="text-center" v-if="loading">
+    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+  </div>
   <template v-if="!loading">
     <p
       class="text-center"
@@ -23,7 +25,7 @@
           <v-card v-for="episode in schedule[group]" :key="episode" width="500">
             <v-row max-height="200">
               <v-col align-self="center">
-                <v-img :src="this.getImage(episode, 'medium')" width="250" />
+                <v-img :src="episode.getImage('medium')" width="250" />
               </v-col>
               <v-col>
                 <h2>
@@ -34,12 +36,19 @@
                     )
                   }}
                 </h2>
-                <h4>{{ episode.show.name }}</h4>
+                <h4>
+                  {{ episode.getShow().getName()
+                  }}<span v-if="episode.getShow().getRating()">
+                    (<v-icon icon="mdi-star" />{{
+                      episode.getShow().getRating()
+                    }})</span
+                  >
+                </h4>
                 <h5 v-if="groupBy === 'genre'">
-                  {{ episode.getNetworkName() }}
+                  {{ episode.getShow().getNetworkName() }}
                 </h5>
                 <h5 v-if="groupBy === 'network'">
-                  {{ episode.getGenresJoint() }}
+                  {{ episode.getShow().getGenresJoint() }}
                 </h5>
                 <div
                   v-html="episode.summary"
@@ -66,7 +75,6 @@
 
 <script>
 import { useDisplay } from "vuetify";
-import { Episode } from "@/models/Episode";
 import { mapState } from "vuex";
 
 export default {
@@ -77,9 +85,6 @@ export default {
     const { mdAndUp } = useDisplay();
 
     return { mdAndUp };
-  },
-  methods: {
-    getImage: (episode, size) => Episode.getImage(episode, size),
   },
 };
 </script>

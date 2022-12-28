@@ -2,9 +2,7 @@
   <v-app theme="dark">
     <HeaderBar />
     <v-main>
-      <v-parallax
-        src="assets/background.jpg"
-      >
+      <v-parallax src="assets/background.jpg">
         <router-view />
       </v-parallax>
     </v-main>

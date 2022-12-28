@@ -1,7 +1,6 @@
 import type { IRating } from "@/models/Rating";
 import type { IImage } from "@/models/Image";
 import type { IShow } from "@/models/Show";
-import type { Network } from "@/models/Network";
 import { Rating } from "@/models/Rating";
 import { Image } from "@/models/Image";
 import { Show } from "@/models/Show";
@@ -85,15 +84,6 @@ export class Episode {
 
   getShow = (): Show => this.show;
 
-  getNetwork = (): Network | null => this.getShow().network || null;
-
-  getNetworkName = (): string =>
-    this.getNetwork() ? this.getNetwork()!.name : "No Network";
-
-  getGenres = (): string[] => this.getShow().genres;
-
-  getGenresJoint = (): string => this.getGenres().join(", ");
-
   getAirTime = (sourceOffset: number, targetOffset: number): string =>
     this.airtime
       ? Country.convertTimeBetweenTimezones(
@@ -103,12 +93,9 @@ export class Episode {
         )
       : "No AirTime";
 
-  static getImage = (
-    episode: IEpisode,
-    size: "medium" | "original"
-  ): string => {
-    if (!episode.image) return `assets/placeholder.episode.${size}.png`;
-    return episode.image[size];
+  getImage = (size: "medium" | "original"): string => {
+    if (!this.image) return `assets/placeholder.episode.${size}.png`;
+    return this.image[size];
   };
 
   static getEpisodesByGenre = (episodes: Episode[]) => {
@@ -125,7 +112,7 @@ export class Episode {
     const result: { [network: string]: Episode[] } = {};
     Episode.getNetworks(episodes).forEach((network) => {
       result[network] = episodes.filter(
-        (episode) => episode.getNetworkName() === network
+        (episode) => episode.getShow().getNetworkName() === network
       );
     });
     return result;
@@ -144,7 +131,7 @@ export class Episode {
   static getNetworks = (episodes: Episode[]) => {
     let networks: string[] = [];
     episodes.forEach((episode) => {
-      networks = [...networks, ...[episode.getNetworkName()]];
+      networks = [...networks, ...[episode.getShow().getNetworkName()]];
     });
     return networks
       .filter((value, index, self) => self.indexOf(value) === index)

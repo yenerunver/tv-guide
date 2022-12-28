@@ -121,4 +121,40 @@ export class Show {
     this.updated = updated;
     this._links = _links;
   }
+
+  getName = (): string => this.name;
+  getNetwork = (): Network | null => this.network || null;
+
+  getWebChannel = (): Network | null => this.webChannel || null;
+
+  getNetworkName = (): string =>
+    this.getNetwork()
+      ? this.getNetwork()!.name
+      : this.getWebChannel()
+      ? this.getWebChannel()!.name
+      : "No Network";
+
+  getNetworkCountry = (): Country | null =>
+    this.getNetwork()
+      ? this.getNetwork()!.country
+      : this.getWebChannel()
+      ? this.getWebChannel()!.country
+      : null;
+
+  getNetworkAndCountryName = (): string =>
+    this.getNetworkCountry()
+      ? this.getNetworkName() +
+        (this.getNetworkCountry ? ", " + this.getNetworkCountry()!.name : "")
+      : "No Network";
+
+  getRating = (): number | null => this.rating!.average;
+
+  getGenres = (): string[] => this.genres;
+
+  getGenresJoint = (): string => this.getGenres().join(", ");
+
+  getImage = (size: "medium" | "original"): string => {
+    if (!this.image) return `assets/placeholder.show.${size}.png`;
+    return this.image[size];
+  };
 }

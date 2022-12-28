@@ -20,16 +20,17 @@
       <v-list-item
         v-for="(show, i) in shows"
         :key="i"
-        :prepend-avatar="
-          show.image ? show.image.medium : 'assets/placeholder.show.medium.png'
-        "
-        :title="show.name"
-        :subtitle="
-          show.network
-            ? `${show.network.name}, ${show.network.country.name}`
-            : 'No Network'
-        "
+        :prepend-avatar="show.getImage('medium')"
       >
+        <v-list-item-title
+          >{{ show.getName()
+          }}<span v-if="show.getRating()">
+            (<v-icon icon="mdi-star" />{{ show.getRating() }})</span
+          ></v-list-item-title
+        >
+        <v-list-item-subtitle>{{
+          show.getNetworkAndCountryName()
+        }}</v-list-item-subtitle>
       </v-list-item>
     </v-list>
     <div class="text-center" v-if="isLoading">
@@ -41,6 +42,7 @@
 <script>
 import { mapState } from "vuex";
 import { debounce } from "lodash";
+import { Show } from "@/models/Show";
 
 export default {
   data: () => ({
@@ -59,7 +61,7 @@ export default {
         .then((entries) => {
           this.$store.dispatch(
             "setShows",
-            entries.map((entry) => entry.show)
+            entries.map((entry) => new Show(entry.show))
           );
         })
         .catch((err) => {

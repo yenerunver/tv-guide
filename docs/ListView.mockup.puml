@@ -4,14 +4,14 @@ skinparam handwritten true
 skinparam Backgroundcolor white
 {SI
 {+
-{* <&play-circle><b>TV Guide | .|.|.|.|.|.|.|.|.|Date & Time | Country: | US
- US | AU| BR | CN | DE | NL | TR | UK }
+{* <&play-circle><b>TV Guide }
 .
 {+
 <&magnifying-glass>                      Search Your Favourite TV Show                      <&magnifying-glass>
 }
 .
-{/ Yesterday | <b>Today | Tomorrow | Choose Date <&calendar>  }
+{* < | <b>Today | > | . | . | . | . | . | . | . | . | . | . | . | . | . | . | . | Country: | US
+ US | AU | BR | CN | DE | NL | TR | UK }
 .
 {T-
 +           | 20:00 | 21:00 | 22:00
