@@ -13,9 +13,17 @@
         </v-tabs>
         <v-window v-model="tab">
           <v-window-item value="by-genre">
-            <ScheduleByGenre />
+            <ScheduleItem
+              :groupBy="'genre'"
+              :groupByFunction="getEpisodesByGenre"
+            />
           </v-window-item>
-          <v-window-item value="by-network">By Network</v-window-item>
+          <v-window-item value="by-network">
+            <ScheduleItem
+              :groupBy="'network'"
+              :groupByFunction="getEpisodesByNetwork"
+            />
+          </v-window-item>
         </v-window>
       </v-card>
     </div>
@@ -26,7 +34,8 @@
 import { defineComponent } from "vue";
 
 import SearchShow from "@/components/SearchShow.vue";
-import ScheduleByGenre from "@/components/ScheduleByGenre.vue";
+import ScheduleItem from "@/components/ScheduleItem.vue";
+import { Episode } from "@/models/Episode";
 
 export default defineComponent({
   name: "ListView",
@@ -38,8 +47,13 @@ export default defineComponent({
   },
 
   components: {
-    ScheduleByGenre,
+    ScheduleItem,
     SearchShow,
+  },
+
+  methods: {
+    getEpisodesByGenre: Episode.getEpisodesByGenre,
+    getEpisodesByNetwork: Episode.getEpisodesByNetwork,
   },
 });
 </script>

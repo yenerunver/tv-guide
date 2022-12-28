@@ -1,9 +1,11 @@
 import type { IRating } from "@/models/Rating";
 import type { IImage } from "@/models/Image";
 import type { IShow } from "@/models/Show";
+import type { Network } from "@/models/Network";
 import { Rating } from "@/models/Rating";
 import { Image } from "@/models/Image";
 import { Show } from "@/models/Show";
+import { Country } from "@/models/Country";
 
 export interface IEpisode {
   id: number;
@@ -81,6 +83,26 @@ export class Episode {
     this._links = _links;
   }
 
+  getShow = (): Show => this.show;
+
+  getNetwork = (): Network | null => this.getShow().network || null;
+
+  getNetworkName = (): string =>
+    this.getNetwork() ? this.getNetwork()!.name : "No Network";
+
+  getGenres = (): string[] => this.getShow().genres;
+
+  getGenresJoint = (): string => this.getGenres().join(", ");
+
+  getAirTime = (sourceOffset: number, targetOffset: number): string =>
+    this.airtime
+      ? Country.convertTimeBetweenTimezones(
+          this.airtime,
+          sourceOffset,
+          targetOffset
+        )
+      : "No AirTime";
+
   static getImage = (
     episode: IEpisode,
     size: "medium" | "original"
@@ -89,7 +111,7 @@ export class Episode {
     return episode.image[size];
   };
 
-  static getEpisodesByGenre = (episodes: IEpisode[]) => {
+  static getEpisodesByGenre = (episodes: Episode[]) => {
     const result: { [genre: string]: Episode[] } = {};
     Episode.getGenres(episodes).forEach((genre) => {
       result[genre] = episodes.filter((episode) =>
@@ -99,12 +121,32 @@ export class Episode {
     return result;
   };
 
-  static getGenres = (episodes: IEpisode[]) => {
+  static getEpisodesByNetwork = (episodes: Episode[]) => {
+    const result: { [network: string]: Episode[] } = {};
+    Episode.getNetworks(episodes).forEach((network) => {
+      result[network] = episodes.filter(
+        (episode) => episode.getNetworkName() === network
+      );
+    });
+    return result;
+  };
+
+  static getGenres = (episodes: Episode[]) => {
     let genres: string[] = [];
     episodes.forEach((episode) => {
       genres = [...genres, ...episode.show.genres];
     });
     return genres
+      .filter((value, index, self) => self.indexOf(value) === index)
+      .sort();
+  };
+
+  static getNetworks = (episodes: Episode[]) => {
+    let networks: string[] = [];
+    episodes.forEach((episode) => {
+      networks = [...networks, ...[episode.getNetworkName()]];
+    });
+    return networks
       .filter((value, index, self) => self.indexOf(value) === index)
       .sort();
   };

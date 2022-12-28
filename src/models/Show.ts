@@ -112,7 +112,7 @@ export class Show {
     this.schedule = new Schedule(schedule);
     this.rating = new Rating(rating);
     this.weight = weight;
-    this.network = new Network(network);
+    if (network) this.network = new Network(network);
     if (webChannel) this.webChannel = new Network(webChannel);
     if (dvdCountry) this.dvdCountry = new Country(dvdCountry);
     if (externals) this.externals = new Externals(externals);

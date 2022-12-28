@@ -19,6 +19,7 @@ const store = createStore({
         locale,
         country: Country.getCountryByTimezone(userTimezone),
       },
+      selectedCountry: null,
     };
   },
   mutations: {
@@ -31,6 +32,9 @@ const store = createStore({
     SET_IS_LOADING(state, isLoading) {
       state.isLoading = isLoading;
     },
+    SET_SELECTED_COUNTRY(state, selectedCountry) {
+      state.selectedCountry = selectedCountry;
+    },
   },
   actions: {
     setSchedule({ commit }, schedule) {
@@ -41,6 +45,9 @@ const store = createStore({
     },
     setIsLoading({ commit }, isLoading) {
       commit("SET_IS_LOADING", isLoading);
+    },
+    setSelectedCountry({ commit }, selectedCountry) {
+      commit("SET_SELECTED_COUNTRY", selectedCountry);
     },
   },
 });

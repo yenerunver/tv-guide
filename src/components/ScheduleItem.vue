@@ -22,7 +22,11 @@
         ></v-select>
       </v-col>
     </v-row>
-    <HorizontalGuide :loading="isLoading" :schedule="schedule" />
+    <HorizontalGuide
+      :loading="isLoading"
+      :schedule="schedule"
+      :groupBy="groupBy"
+    />
   </div>
 </template>
 
@@ -34,12 +38,13 @@ import { Episode } from "@/models/Episode";
 
 export default {
   name: "ScheduleItem",
+  props: ["groupBy", "groupByFunction"],
   components: { HorizontalGuide },
   computed: {
     countries: {
       get: () => Country.getAllCountries(),
     },
-    ...mapState(["locale", "schedule"]),
+    ...mapState(["locale", "schedule", "selectedCountry"]),
   },
   data: () => ({
     country: "TR",
@@ -54,21 +59,23 @@ export default {
         year: "numeric",
         month: "long",
       });
-
-      this.fetchSchedule(this.country);
     },
   },
   created() {
     this.date = new Date();
 
     this.$watch(
-      () => this.country,
+      () => this.country && this.date,
       () => {
+        this.$store.dispatch(
+          "setSelectedCountry",
+          Country.getCountryByCode(this.country)
+        );
         this.fetchSchedule(this.country);
       },
       // fetch the data when the view is created and the data is
       // already being observed
-      { immediate: true }
+      { deep: true, immediate: true }
     );
   },
   methods: {
@@ -85,10 +92,7 @@ export default {
         .then((res) => res.json())
         .then((entries) => {
           const episodes = entries.map((episode) => new Episode(episode));
-          this.$store.dispatch(
-            "setSchedule",
-            Episode.getEpisodesByGenre(episodes)
-          );
+          this.$store.dispatch("setSchedule", this.groupByFunction(episodes));
         })
         .catch((err) => {
           console.error(err);
@@ -96,14 +100,10 @@ export default {
         .finally(() => (this.isLoading = false));
     },
     setDateOneDayBefore() {
-      console.log("date", this.date);
       this.date = new Date(this.date.setDate(this.date.getDate() - 1));
-      console.log("date", this.date);
     },
     setDateOneDayAfter() {
-      console.log("date", this.date);
       this.date = new Date(this.date.setDate(this.date.getDate() + 1));
-      console.log("date", this.date);
     },
   },
 };
