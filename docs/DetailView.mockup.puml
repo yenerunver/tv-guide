@@ -1,0 +1,47 @@
+@startsalt
+skinparam dpi 300
+skinparam handwritten true
+skinparam Backgroundcolor white
+{SI
+{+
+{* <&play-circle><b>TV Guide | /show/:id/}
+.
+{+
+{- Friends <size:5><color:Red>ended
+{{+
+<size:1><img:../assets/placeholder.show.thumbnail.png></size>
+}|{#
+Network | NBC, United States
+Genres | Comedy, Romance
+Premiered | 1994-09-22
+Ended | 2004-05-06
+Rating Average | 8.5
+}}
+{#
+Language | English
+Runtime | 30 minutes
+Official Site | https://www.friends.com
+TV Maze Page | https://www.tvmaze.com/shows/431/friends
+tvrage| 3616
+thetvdb| 79168
+imdb| tt0108778
+{<p>Six young (20-something) people from
+New York City (Manhattan), on their own
+and struggling to survive in the real world,
+find the companionship, comfort and support
+they get from each other to be the perfect
+antidote to the pressures of life.</p>
+<p>This average group of buddies goes
+through massive mayhem, family trouble,
+past and future romances, fights, laughs,
+tears and surprises as they learn what it
+really means to be a friend.</p>} | *
+}
+Last updated: January 1, 2022 8:27:22 PM
+}
+}
+}
+}
+}
+}
+@endsalt
