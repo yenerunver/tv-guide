@@ -79,8 +79,6 @@ export default {
         );
         this.fetchSchedule(this.country);
       },
-      // fetch the data when the view is created and the data is
-      // already being observed
       { deep: true, immediate: true }
     );
   },

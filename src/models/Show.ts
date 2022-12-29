@@ -157,4 +157,24 @@ export class Show {
     if (!this.image) return `assets/placeholder.show.${size}.png`;
     return this.image[size];
   };
+
+  getEndedLocaleDate = (locale: string) =>
+    this.ended
+      ? new Date(this.ended).toLocaleDateString(locale, {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+      : "-";
+
+  getPremieredLocaleDate = (locale: string) =>
+    this.premiered
+      ? new Date(this.premiered).toLocaleDateString(locale, {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+      : "-";
+
+  getExternals = () => this.externals;
 }

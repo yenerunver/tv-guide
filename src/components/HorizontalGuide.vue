@@ -22,7 +22,12 @@
       </v-col>
       <v-col :cols="mdAndUp ? 10 : 11">
         <div class="wrapper overflow-x-visible overflow-y-hidden my-8">
-          <v-card v-for="episode in schedule[group]" :key="episode" width="500">
+          <v-card
+            v-for="episode in schedule[group]"
+            :key="episode"
+            width="500"
+            v-on:click.prevent="goToShowPage(episode.getShow().id)"
+          >
             <v-row max-height="200">
               <v-col align-self="center">
                 <v-img :src="episode.getImage('medium')" width="250" />
@@ -76,6 +81,7 @@
 <script>
 import { useDisplay } from "vuetify";
 import { mapState } from "vuex";
+import router from "@/router";
 
 export default {
   name: "HorizontalGuide",
@@ -85,6 +91,9 @@ export default {
     const { mdAndUp } = useDisplay();
 
     return { mdAndUp };
+  },
+  methods: {
+    goToShowPage: (showId) => router.push(`/shows/${showId}`),
   },
 };
 </script>

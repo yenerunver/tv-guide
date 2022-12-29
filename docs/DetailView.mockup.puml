@@ -4,7 +4,7 @@ skinparam handwritten true
 skinparam Backgroundcolor white
 {SI
 {+
-{* <&play-circle><b>TV Guide | /show/:id/}
+{* <&play-circle><b>TV Guide | /shows/:id/}
 .
 {+
 {- Friends <size:5><color:Red>ended

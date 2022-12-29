@@ -1,8 +1,8 @@
 <template>
   <v-app theme="dark">
-    <HeaderBar />
+    <HeaderBar :backLink="$route.path !== '/'" />
     <v-main>
-      <v-parallax src="assets/background.jpg">
+      <v-parallax src="/assets/background.jpg">
         <router-view />
       </v-parallax>
     </v-main>
@@ -18,7 +18,6 @@ import FooterCopyright from "@/components/FooterCopyright.vue";
 
 export default defineComponent({
   name: "App",
-
   components: {
     HeaderBar,
     FooterCopyright,

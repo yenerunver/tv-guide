@@ -14,4 +14,13 @@ export class Externals {
     this.thetvdb = thetvdb;
     this.imdb = imdb;
   }
+
+  getIMDbUrl = () =>
+    this.imdb ? `https://www.imdb.com/title/${this.imdb}` : "";
+
+  getTheTVDBUrl = () =>
+    this.thetvdb ? `https://thetvdb.com/search?query=${this.thetvdb}` : "";
+
+  getTheTVRageUrl = () =>
+    this.tvrage ? `https://www.tvrage.com/shows/id-${this.tvrage}` : "";
 }

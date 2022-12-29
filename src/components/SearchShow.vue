@@ -15,12 +15,19 @@
         prepend-icon="mdi-database-search"
       ></v-text-field>
     </v-card-text>
+
+    <div class="text-center my-8" v-if="isLoading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </div>
+
     <v-list lines="two" v-if="!isLoading" :items="shows">
       <v-list-subheader v-if="shows.length">Results</v-list-subheader>
       <v-list-item
         v-for="(show, i) in shows"
         :key="i"
         :prepend-avatar="show.getImage('medium')"
+        item-value="show.id"
+        v-on:click.prevent="goToShowPage(show.id)"
       >
         <v-list-item-title
           >{{ show.getName()
@@ -33,9 +40,6 @@
         }}</v-list-item-subtitle>
       </v-list-item>
     </v-list>
-    <div class="text-center" v-if="isLoading">
-      <v-progress-circular indeterminate color="primary"></v-progress-circular>
-    </div>
   </v-card>
 </template>
 
@@ -43,6 +47,7 @@
 import { mapState } from "vuex";
 import { debounce } from "lodash";
 import { Show } from "@/models/Show";
+import router from "@/router";
 
 export default {
   data: () => ({
@@ -84,6 +89,7 @@ export default {
       this.searchFunction = debounce(() => this.fetchShows(searchQuery), 500);
       this.searchFunction();
     },
+    goToShowPage: (showId) => router.push(`/shows/${showId}`),
   },
 };
 </script>
