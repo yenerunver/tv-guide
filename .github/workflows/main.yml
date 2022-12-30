@@ -22,3 +22,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
+          branch: main
+          repository-name: yenerunver/yenerunver.github.io
+          target-folder: tv-guide
