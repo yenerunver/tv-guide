@@ -2,82 +2,39 @@
   <div class="pa-8">
     <v-row class="my-8">
       <v-col justify="start">
-        <a
-          href=""
-          class="text-decoration-none"
-          v-on:click.prevent="setDateOneDayBefore"
-          ><v-icon icon="mdi-arrow-left-drop-circle-outline"></v-icon
-        ></a>
-        <a class="mx-4">{{ dateString }}</a>
-        <a
-          href=""
-          class="text-decoration-none"
-          v-on:click.prevent="setDateOneDayAfter"
-          ><v-icon icon="mdi-arrow-right-drop-circle-outline"></v-icon
-        ></a>
+        <DateSelector />
       </v-col>
       <v-col justify="end" cols="2">
-        <v-select
-          v-model="country"
-          name="country"
-          variant="solo"
-          density="compact"
-          :items="countries"
-          item-title="code"
-          item-value="code"
-        ></v-select>
+        <CountrySelector />
       </v-col>
     </v-row>
-    <HorizontalGuide
-      :loading="isLoading"
-      :schedule="schedule"
-      :groupBy="groupBy"
-    />
+    <div class="text-center" v-if="isLoading">
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </div>
+    <HorizontalGuide v-else :groupBy="groupBy" />
   </div>
 </template>
 
 <script>
 import HorizontalGuide from "@/components/HorizontalGuide.vue";
-import { Country } from "@/models/Country";
 import { mapState } from "vuex";
 import { Episode } from "@/models/Episode";
+import CountrySelector from "@/components/CountrySelector.vue";
+import DateSelector from "@/components/DateSelector.vue";
 
 export default {
   name: "ScheduleItem",
-  props: ["groupBy", "groupByFunction"],
-  components: { HorizontalGuide },
-  computed: {
-    countries: {
-      get: () => Country.getAllCountries(),
-    },
-    ...mapState(["locale", "schedule", "selectedCountry"]),
-  },
+  props: ["groupBy"],
+  components: { CountrySelector, DateSelector, HorizontalGuide },
   data: () => ({
-    country: "TR",
-    date: null,
-    dateString: "",
     isLoading: false,
   }),
-  watch: {
-    date() {
-      this.dateString = this.date.toLocaleDateString(this.locale.locale, {
-        day: "numeric",
-        year: "numeric",
-        month: "long",
-      });
-    },
-  },
+  computed: mapState(["locale", "schedule", "selectedCountry", "selectedDate"]),
   created() {
-    this.date = new Date();
-
     this.$watch(
-      () => this.country && this.date,
+      () => this.selectedCountry && this.selectedDate,
       () => {
-        this.$store.dispatch(
-          "setSelectedCountry",
-          Country.getCountryByCode(this.country)
-        );
-        this.fetchSchedule(this.country);
+        this.fetchSchedule(this.selectedCountry.code);
       },
       { deep: true, immediate: true }
     );
@@ -88,7 +45,17 @@ export default {
 
       this.isLoading = true;
 
-      const formattedDate = this.date.toISOString().split("T")[0];
+      const formattedDate = this.selectedDate.toISOString().split("T")[0];
+
+      if (
+        this.schedule &&
+        this.schedule[formattedDate] &&
+        this.schedule[formattedDate][this.selectedCountry.code] &&
+        this.schedule[formattedDate][this.selectedCountry.code][this.groupBy]
+      ) {
+        this.isLoading = false;
+        return;
+      }
 
       fetch(
         `https://api.tvmaze.com/schedule?date=${formattedDate}&country=${countryCode}`
@@ -96,18 +63,12 @@ export default {
         .then((res) => res.json())
         .then((entries) => {
           const episodes = entries.map((episode) => new Episode(episode));
-          this.$store.dispatch("setSchedule", this.groupByFunction(episodes));
+          this.$store.dispatch("setSchedule", { episodes, formattedDate });
         })
         .catch((err) => {
           console.error(err);
         })
         .finally(() => (this.isLoading = false));
-    },
-    setDateOneDayBefore() {
-      this.date = new Date(this.date.setDate(this.date.getDate() - 1));
-    },
-    setDateOneDayAfter() {
-      this.date = new Date(this.date.setDate(this.date.getDate() + 1));
     },
   },
 };

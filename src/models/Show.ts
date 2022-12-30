@@ -177,4 +177,14 @@ export class Show {
       : "-";
 
   getExternals = () => this.externals;
+
+  static getTop5 = (shows: Show[]) => {
+    const showsWithRatings = shows.filter((show) => show.getRating() !== null);
+    showsWithRatings.sort((a, b) => {
+      if (a.getRating()! < b.getRating()!) return 1;
+      if (a.getRating()! > b.getRating()!) return -1;
+      return 0;
+    });
+    return showsWithRatings.slice(0, 5);
+  };
 }
