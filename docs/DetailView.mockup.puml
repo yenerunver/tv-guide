@@ -9,7 +9,7 @@ skinparam Backgroundcolor white
 {+
 {- Friends <size:5><color:Red>ended
 {{+
-<size:1><img:../assets/placeholder.show.thumbnail.png></size>
+<size:1><img:../public/placeholder.show.thumbnail.png></size>
 }|{#
 Network | NBC, United States
 Genres | Comedy, Romance

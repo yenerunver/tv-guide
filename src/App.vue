@@ -2,7 +2,7 @@
   <v-app theme="dark">
     <HeaderBar :backLink="$route.path !== '/'" />
     <v-main>
-      <v-parallax src="/assets/background.jpg">
+      <v-parallax :src="background">
         <router-view />
       </v-parallax>
     </v-main>
@@ -10,7 +10,7 @@
   </v-app>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
 
 import HeaderBar from "@/components/HeaderBar.vue";
@@ -21,6 +21,11 @@ export default defineComponent({
   components: {
     HeaderBar,
     FooterCopyright,
+  },
+  computed: {
+    background: {
+      get: () => `${import.meta.env.BASE_URL || "/"}background.jpg`,
+    },
   },
 });
 </script>

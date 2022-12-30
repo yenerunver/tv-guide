@@ -34,7 +34,14 @@ export default {
     },
   },
   created() {
-    this.country = this.selectedCountry.code;
+    this.$watch(
+      () => this.selectedCountry,
+      () => {
+        if (this.country !== this.selectedCountry.code)
+          this.country = this.selectedCountry.code;
+      },
+      { deep: true, immediate: true }
+    );
   },
 };
 </script>

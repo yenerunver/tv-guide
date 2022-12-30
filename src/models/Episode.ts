@@ -94,7 +94,10 @@ export class Episode {
       : "No AirTime";
 
   getImage = (size: "medium" | "original"): string => {
-    if (!this.image) return `assets/placeholder.episode.${size}.png`;
+    if (!this.image)
+      return `${
+        import.meta.env.BASE_URL || "/"
+      }placeholder.episode.${size}.png`;
     return this.image[size];
   };
 

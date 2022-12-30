@@ -21,11 +21,7 @@
     >
       No shows with ratings found.
     </p>
-    <v-list
-      lines="two"
-      v-if="!isLoading"
-      :items="schedule[formattedDate][selectedCountry.code].top5"
-    >
+    <v-list lines="two" v-if="!isLoading">
       <v-list-item
         v-for="(show, i) in schedule[formattedDate][selectedCountry.code].top5"
         :key="i"

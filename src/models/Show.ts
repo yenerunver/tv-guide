@@ -154,7 +154,8 @@ export class Show {
   getGenresJoint = (): string => this.getGenres().join(", ");
 
   getImage = (size: "medium" | "original"): string => {
-    if (!this.image) return `assets/placeholder.show.${size}.png`;
+    if (!this.image)
+      return `${import.meta.env.BASE_URL || "/"}placeholder.show.${size}.png`;
     return this.image[size];
   };
 
