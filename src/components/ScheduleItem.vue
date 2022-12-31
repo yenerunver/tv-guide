@@ -4,8 +4,8 @@
       <v-col justify="start">
         <DateSelector />
       </v-col>
-      <v-col justify="end" cols="2">
-        <CountrySelector />
+      <v-col justify="end" cols="3">
+        <CountrySelector :isLoading="isLoading" />
       </v-col>
     </v-row>
     <div class="text-center" v-if="isLoading">

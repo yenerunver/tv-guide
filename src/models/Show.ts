@@ -109,7 +109,7 @@ export class Show {
     this.premiered = premiered;
     this.ended = ended;
     this.officialSite = officialSite;
-    this.schedule = new Schedule(schedule);
+    if (schedule) this.schedule = new Schedule(schedule);
     this.rating = new Rating(rating);
     this.weight = weight;
     if (network) this.network = new Network(network);

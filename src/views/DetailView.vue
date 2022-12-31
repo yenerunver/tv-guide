@@ -26,7 +26,7 @@
                 </tr>
                 <tr>
                   <th>Premiered</th>
-                  <td v-if="show.premiered">
+                  <td>
                     {{ show.getPremieredLocaleDate(locale.locale) }}
                   </td>
                 </tr>
@@ -36,7 +36,11 @@
                 </tr>
                 <tr>
                   <th>Rating Average</th>
-                  <td><v-icon icon="mdi-star" />{{ show.getRating() }}</td>
+                  <td>
+                    <v-icon icon="mdi-star" v-if="show.getRating()" />{{
+                      show.getRating()
+                    }}
+                  </td>
                 </tr>
               </tbody>
             </v-table>

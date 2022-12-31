@@ -21,15 +21,12 @@
     :key="group"
     align="center"
   >
-    <v-col :cols="mdAndUp ? 2 : 1">
-      <div
-        class="text-overline"
-        style="transform(270deg); white-space: nowrap;"
-      >
+    <v-col :cols="mdAndUp ? 1 : 2">
+      <div class="text-overline text-center text-vertical">
         {{ group }}
       </div>
     </v-col>
-    <v-col :cols="mdAndUp ? 10 : 11">
+    <v-col :cols="mdAndUp ? 11 : 10">
       <div class="wrapper overflow-x-visible overflow-y-hidden my-8">
         <v-card
           v-for="episode in schedule[formattedDate][selectedCountry.code][
@@ -40,8 +37,8 @@
           v-on:click.prevent="goToShowPage(episode.getShow().id)"
         >
           <v-row max-height="200">
-            <v-col align-self="center">
-              <v-img :src="episode.getImage('medium')" width="250" />
+            <v-col align-self="center" cols="4">
+              <v-img :src="episode.getShow().getImage('medium')" width="150" />
             </v-col>
             <v-col>
               <h2>
@@ -85,6 +82,10 @@
   grid-template-columns: repeat(3, auto);
   grid-gap: 0 50px;
   grid-auto-flow: column;
+}
+.text-vertical {
+  transform: rotate(270deg);
+  white-space: nowrap;
 }
 </style>
 

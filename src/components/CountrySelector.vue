@@ -5,6 +5,7 @@
     variant="solo"
     density="compact"
     :items="countries"
+    :loading="isLoading"
     item-title="code"
     item-value="code"
   ></v-select>
@@ -16,6 +17,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "CountrySelector",
+  props: ["isLoading"],
   computed: {
     countries: {
       get: () => Country.getAllCountries(),

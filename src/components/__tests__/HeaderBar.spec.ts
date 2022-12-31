@@ -5,7 +5,14 @@ import HeaderBar from "../HeaderBar.vue";
 
 describe("HeaderBar", () => {
   it("renders properly", () => {
-    const wrapper = mount(HeaderBar, { props: {} });
+    const wrapper = mount(HeaderBar, { props: { backLink: false } });
     expect(wrapper.text()).toContain("TV Guide");
+  });
+
+  it("renders with back link", () => {
+    const wrapper = mount(HeaderBar, { props: { backLink: true } });
+    expect(wrapper.html()).toContain(
+      `<v-icon icon="mdi-arrow-left-drop-circle-outline"></v-icon>`
+    );
   });
 });

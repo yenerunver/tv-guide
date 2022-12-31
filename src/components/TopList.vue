@@ -10,7 +10,7 @@
     <v-row class="my-8">
       <v-col justify="start"></v-col>
       <v-col justify="end" cols="2">
-        <CountrySelector />
+        <CountrySelector :isLoading="isLoading" />
       </v-col>
     </v-row>
     <p

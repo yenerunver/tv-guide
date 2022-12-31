@@ -33,7 +33,7 @@ export class Country {
   ) => {
     const country = getCountry(code);
     if (!country) return null;
-    if (!timezone) timezone = country.timezones[0]; // get one of the timezones for simplicity
+    if (!timezone) [timezone] = country.timezones; // get one of the timezones for simplicity
     if (!offset) offset = getTimezone(timezone)!.utcOffset;
     return new Country({
       name: country.name,
@@ -56,7 +56,7 @@ export class Country {
       Object.values(getAllCountries())
         // Shrinking the country list for demo purposes
         .filter((country: CountryType) =>
-          ["AU", "CN", "DE", "IN", "NL", "TR", "UK", "US"].includes(country.id)
+          ["AU", "CN", "DE", "GB", "NL", "TR", "US"].includes(country.id)
         )
         .map((country: CountryType) => country.id)
         .map((countryCode: string) => Country.getCountryByCode(countryCode))
@@ -70,14 +70,19 @@ export class Country {
   ): string => {
     let [hours, minutes] = time.split(":").map((string) => Number(string)); // convert to single digit
     // convert hours and minutes to UTC
-    hours -= sourceOffset / 60;
+    hours -= parseInt(String(sourceOffset / 60));
     minutes -= sourceOffset % 60;
     // convert hours and minutes to target
-    hours += targetOffset / 60;
+    hours += parseInt(String(targetOffset / 60));
     minutes += targetOffset % 60;
+    // converting negative minutes to negative hours
+    if (minutes < 0) {
+      hours -= parseInt(String((-1 * minutes) / 60));
+      minutes = (-1 * minutes) % 60;
+    }
     // adding extra minutes to hours
-    if (minutes > 60) {
-      hours += minutes / 60;
+    if (minutes >= 60) {
+      hours += parseInt(String(minutes / 60));
       minutes = minutes % 60;
     }
     // getting rid of extra hours
